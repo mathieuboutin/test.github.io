@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+        <title>Babylon.js sample code</title>
+
+        <!-- Babylon.js -->
+        <script src="https://code.jquery.com/pep/0.4.2/pep.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.6.2/dat.gui.min.js"></script>
+        <script src="https://preview.babylonjs.com/ammo.js"></script>
+        <script src="https://preview.babylonjs.com/cannon.js"></script>
+        <script src="https://preview.babylonjs.com/Oimo.js"></script>
+        <script src="https://preview.babylonjs.com/gltf_validator.js"></script>
+        <script src="https://preview.babylonjs.com/earcut.min.js"></script>
+        <script src="https://preview.babylonjs.com/babylon.js"></script>
+        <script src="https://preview.babylonjs.com/inspector/babylon.inspector.bundle.js"></script>
+        <script src="https://preview.babylonjs.com/materialsLibrary/babylonjs.materials.min.js"></script>
+        <script src="https://preview.babylonjs.com/proceduralTexturesLibrary/babylonjs.proceduralTextures.min.js"></script>
+        <script src="https://preview.babylonjs.com/postProcessesLibrary/babylonjs.postProcess.min.js"></script>
+        <script src="https://preview.babylonjs.com/loaders/babylonjs.loaders.js"></script>
+        <script src="https://preview.babylonjs.com/serializers/babylonjs.serializers.min.js"></script>
+        <script src="https://preview.babylonjs.com/gui/babylon.gui.min.js"></script>
+
+        <style>
+            html, body {
+                overflow: hidden;
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+
+            #renderCanvas {
+                width: 100%;
+                height: 100%;
+                touch-action: none;
+            }
+        </style>
+    </head>
+<body>
+    <canvas id="renderCanvas"></canvas>
+    <script>
+        var canvas = document.getElementById("renderCanvas");
+
+        var textejson = '{"playlists":{"volume":{"default":0.5,"max":1},"lists":[{"uid":"playlist-314","name":"Playlist #314","default":"track-314","loop":false,"tracks":["track-314"]},{"uid":"playlist-317","name":"Playlist #317","default":"track-317","loop":false,"tracks":["track-317"]},{"uid":"playlist-359","name":"Playlist #359","default":"track-359","loop":false,"tracks":["track-359"]},{"uid":"playlist-316","name":"Playlist #316","default":"track-316","loop":false,"tracks":["track-316"]}],"tracks":[{"uid":"track-314","author":"sncf_immo","name":"","url":""},{"uid":"track-317","author":"sncf_immo","name":"","url":""},{"uid":"track-359","author":"sncf_immo","name":"","url":""},{"uid":"track-316","author":"sncf_immo","name":"test audio","url":"/media/sncf_immo/2018/06/18/10/20/SampleAudio_0.4mb.mp3"}]},"story":{"uid":"scenario_83","name":"khaled_test11","slug":"khaled_test11","description":"","scenes":[{"uid":0,"name":"sc1","slug":"sc1","camera":{"yaw":{"default":24.057935789656},"pitch":{"default":5.2033990831497},"fov":{"default":77.131878367029}},"background":"#202040","media":{"uid":"photo1","type":"image","source":{"format":"equi","url":"./textures/360photo.jpg"}},"playlists":{"default":"playlist-314"},"hotspots":[{"uid":"sphere1","name":"vers sc2","transform":{"rotation":{"x":0,"y":0,"z":0},"scale":{"x":1,"y":1,"z":1},"position":{"x":1,"y":0,"z":0}},"geometry":{"type":"sphère","options":{"width":"","radius":1,"height":""}},"material":{"image":"","opacity":1},"events":{"onClick":["scene_action_316"]}},{"uid":"info","name":"Info","geometry":{"type":"dom","options":{"width":1,"radius":"","height":1}},"interactive":true,"dom":{"url":"https://upload.wikimedia.org/wikipedia/commons/3/33/Info_icon_002.svg","id":"hotspot-vid_372","width":"5em","height":"5em","color":"transparent","index":10,"class":["media-style__primary","content-style__primary"]},"transform":{"position":{"x":-1,"y":0,"z":0},"rotation":{"x":0,"y":1,"z":0},"scale":{"x":1,"y":1,"z":1}}}]},{"uid":"scene_317","name":"sc3","slug":"sc3","camera":{"yaw":{"default":4.5782252532718},"pitch":{"default":0.26625428149622},"fov":{"default":45}},"background":"#202040","media":{"uid":"media_25","type":"image","source":{"format":"equi","url":"/media/sncf_immo/2018/06/20/15/25/R0010277.JPG"}},"playlists":{"default":"playlist-317"},"hotspots":[{"uid":"hotspot_380","name":"Vers_sc4","transform":{"position":{"x":-11.297741750242,"y":-35.129264863296,"z":-475.33107},"rotation":{"x":0,"y":0,"z":0},"scale":{"x":1,"y":1,"z":1}},"geometry":{"type":"plane","options":{"width":80,"height":80}},"material":{"image":"/public/img/common/viewer/arrow.png","opacity":1},"events":{"onClick":["scene_action_359"]}},{"uid":"hotspot_354","name":"retour","transform":{"position":{"x":78.765680205573,"y":-11.941935961596,"z":-183.44852},"rotation":{"x":0,"y":0,"z":0},"scale":{"x":1,"y":1,"z":1}},"geometry":{"type":"plane","options":{"width":80,"height":80}},"material":{"image":"/public/img/common/viewer/arrow.png","opacity":1},"events":{"onClick":["scene_action_314"]}}]},{"uid":"scene_359","name":"sc4","slug":"sc4","camera":{"yaw":{"default":135.39735734134},"pitch":{"default":-8.634600385742},"fov":{"default":45}},"background":"#202040","media":{"uid":"media_327","type":"image","source":{"format":"equi","url":"/media/sncf_immo/2019/01/29/11/327/pano_8k.jpg"}},"playlists":{"default":"playlist-359"},"hotspots":[{"uid":"hotspot_407","name":"vers_sc1","transform":{"position":{"x":175.98423778941,"y":-21.256354438459,"z":178.3787},"rotation":{"x":0,"y":0,"z":0},"scale":{"x":1,"y":1,"z":1}},"geometry":{"type":"plane","options":{"width":80,"height":80}},"material":{"image":"/public/img/common/viewer/arrow.png","opacity":1},"events":{"onClick":["scene_action_314"]}},{"uid":"hotspot_405","name":"ccccccc","interactive":true,"type":"dom","dom":{"id":"hotspot-vid_405","width":"5em","height":"5em","color":"transparent","index":10,"class":["media-style__primary","content-style__primary"]},"transform":{"position":{"x":257.52166029431,"y":-31.125271186977,"z":128.45743},"rotation":{"x":0,"y":0,"z":0},"scale":{"x":1,"y":1,"z":1}}},{"uid":"hotspot_406","name":"Photo","interactive":true,"type":"dom","dom":{"id":"hotspot-img_406","width":"5em","height":"5em","color":"transparent","index":10,"class":["content-style__primary","media-style__see-through"]},"transform":{"position":{"x":89.443735438954,"y":-21.625755152702,"z":181.47863},"rotation":{"x":0,"y":0,"z":0},"scale":{"x":1,"y":1,"z":1}}}]}]},"actions":[{"uid":"scene_action_317","target":"viewer.story","method":{"name":"loadScene","args":["scene_317"]}},{"uid":"scene_action_314","target":"viewer.story","method":{"name":"loadScene","args":["scene_314"]}},{"uid":"scene_action_359","target":"viewer.story","method":{"name":"loadScene","args":["scene_359"]}},{"uid":"scene_action_314","target":"viewer.story","method":{"name":"loadScene","args":["scene_314"]}},{"uid":"scene_action_316","target":"viewer.story","method":{"name":"loadScene","args":["scene_316"]}}],"plugins":{"prefix":"","engines":[{"uid":"org.forgejs.webvrbutton","url":"/public/js/common/viewer/plugins/WebVRButton/"}],"instances":[{"uid":"webvrbutton","engine":"org.forgejs.webvrbutton","options":{"bottom":10,"right":10}}]}}';
+        var courses = JSON.parse(textejson);
+        
+        
+        var loadJSON = function()
+        {
+            loadStoryJSON();
+           loadActionsJSON();
+            loadPlaylistJSON();
+        }
+        
+        
+        //------------ Fonctions globales---------------------
+        var getNb = function(chemin)
+        {   
+            // on test si l'objet est un tableau
+            if (Array.isArray(chemin))
+            {
+                return chemin.length;
+            }
+            else
+            {
+                return console.error(chemin," n'est pas un tableau");
+            }
+        }
+        
+        
+        
+        // ---------------Chargement de l'objet Story-----------------
+        
+        var idStory ;
+        var nameStory;
+        var slugStory;
+        var descriptionStory;
+        
+        var loadStoryJSON = function()
+        {   
+            idStory = courses.story.uid
+            nameStory = courses.story.name;
+            slugStory = courses.story.slug;
+            descriptionStory = courses.story.description;
+            
+            loadSceneJSON();
+        }
+        
+        //------------------Chargement de l'objet Story.scenes----------------
+        
+        // Nombre de scènes
+        var t = getNb(courses.story.scenes);
+        
+        var idScene = new Array(t);         // id de la scene
+        var nameScene = new Array(t);       // nom de la scene
+        var slugScene = new Array(t);       // slug de la scene
+        var backgroundScene = new Array(t); // couleur background scene
+        var cameraJSON = new Array(t);      // camera de la scene
+        var mediaScene = new Array(t);      // media de la scene
+        var playlistScene = new Array(t);   // playlists de la scene
+        
+        var loadSceneJSON = function()
+        {
+            loadInfoScenesJSON();
+            loadHotspotsJSON();
+        }
+        
+        var loadInfoScenesJSON = function()
+        {
+            for(var i = 0; i<t;i++)
+            {
+                idScene[i] = courses.story.scenes[i].uid;
+                nameScene[i] = courses.story.scenes[i].name;
+                slugScene[i] = courses.story.scenes[i].slug;
+                backgroundScene[i] = courses.story.scenes[i].background;
+                cameraJSON[i] = courses.story.scenes[i].camera;
+                mediaScene[i] = courses.story.scenes[i].media;
+                playlistScene[i] = courses.story.scenes[i].playlists;
+         
+            }
+        }
+        
+        //---------------Chargement de l'objet Story.scenes.hotspots-----------
+         
+        
+        // Déclaration des tableaux stockant les données des hotspots
+        var EtiquetteHotspot = new Array(t);
+        var positionHotspot = new Array(t);
+        var rotationHotspot = new Array(t);
+        var scaleHotspot = new Array(t);
+        var idHotspot = new Array(t);
+        var geometryHotspot = new Array(t);
+        var materialHotspot = new Array(t);
+        var eventsHotspot = new Array(t);
+        var interactiveHotspot = new Array(t);
+        var typeHotspot = new Array(t);
+        var domHotspot = new Array(t);
+        
+        var loadHotspotsJSON = function()
+        {
+            // ligne j : j-ème scène
+            // colonne i : ième hotspots
+            
+        for(var j= 0; j<t;j++)
+        {
+            var n = getNb(courses.story.scenes[j].hotspots);
+            EtiquetteHotspot[j] = new Array(n);
+            positionHotspot[j] = new Array(n);
+            rotationHotspot[j] = new Array(n);
+            scaleHotspot[j] = new Array(n);
+            idHotspot[j] = new Array(n);
+            geometryHotspot[j] = new Array(n);
+            materialHotspot[j] = new Array(n);
+            eventsHotspot[j] = new Array(n);
+            interactiveHotspot[j] = new Array(n);
+            typeHotspot[j] = new Array(n);
+            domHotspot[j] = new Array(n);
+            //console.log("Scène n° ", j, ": ")
+            for(var i =0;i<n;i++)
+                {
+                    // Si jamais un objet n'est pas défini dans le JSON, il sera "undefined" mais il sera quand même stocké dans le tableau pour garder l'intégrité des indices
+                    idHotspot[j][i] = courses.story.scenes[j].hotspots[i].uid;
+                    EtiquetteHotspot[j][i] = courses.story.scenes[j].hotspots[i].name;
+                    positionHotspot[j][i] = courses.story.scenes[j].hotspots[i].transform.position;
+                    rotationHotspot[j][i] = courses.story.scenes[j].hotspots[i].transform.rotation;
+                    scaleHotspot[j][i] = courses.story.scenes[j].hotspots[i].transform.scale;
+                    geometryHotspot[j][i] = courses.story.scenes[j].hotspots[i].geometry;
+                    materialHotspot[j][i] = courses.story.scenes[j].hotspots[i].material;
+                    interactiveHotspot[j][i] = courses.story.scenes[j].hotspots[i].interactive;
+                    typeHotspot[j][i] = courses.story.scenes[j].hotspots[i].type;
+                    domHotspot[j][i] = courses.story.scenes[j].hotspots[i].dom;
+                    
+                   
+                    //console.log( "\t hotspots n° " , i ,": \n \t -name : " ,EtiquetteHotspot[j][i] ,"\n \t -position : ", positionHotspot[j][i] ,"\n \t -rotation : ",rotationHotspot[j][i], "\n \t -scale : " , scaleHotspot[j][i], "\n" );   
+                }
+        }
+        }
+        
+        //---------------------Chargement de l'objet actions------------------------
+        
+        // Nombre d'actions 
+        var z= getNb(courses.actions); 
+        
+        // Déclaration des tableaux contenant les données d'actions
+        var idActions = new Array(z);
+        var targetActions = new Array(z);
+        var methodActions = new Array(z);
+        var loadActionsJSON = function()
+        {
+            for (var i = 0; i<z;i++)
+            {
+                idActions[i] = courses.actions[i].uid;
+                targetActions[i] = courses.actions[i].target;
+                methodActions[i] = courses.actions[i].method;
+              
+            }
+        }
+        
+        // ----------------------Chargement de l'objet Playlists ---------------------------
+        
+        var q = getNb(courses.playlists.lists);
+        var volumePlaylist;
+        var listsPlaylist = new Array(q);
+        var tracksPlaylist = new Array(q);
+        var loadPlaylistJSON = function()
+        {   
+            volumePlaylist = courses.playlists.volume;
+            for(var i=0; i<q;i++)
+            {
+                listsPlaylist[i] = courses.playlists.lists[i] ;
+                tracksPlaylist[i] = courses.playlists.tracks[i];
+               
+            }
+        }
+        
+        var scene;
+        class Scene{
+            
+            constructor()
+            {
+                // Récupération des données JSON
+                 
+               loadJSON();
+            
+               // création de la scene
+                scene = new BABYLON.Scene(engine);
+        
+               // création de la caméra + caméra VR
+                 this.createCamera(0);
+                 this.createCameraVR();
+                
+               // Initialisation des matériaux
+               
+                greenMat = new BABYLON.StandardMaterial("green", scene);
+                greenMat.diffuseColor = new BABYLON.Color3(0, 255, 0);
+                greenMat.emissiveColor = new BABYLON.Color3(0, 255, 0);
+                greenMat.specularColor = new BABYLON.Color3(0, 255, 0);
+        
+                redMat = new BABYLON.StandardMaterial("red", scene);
+                redMat.diffuseColor = new BABYLON.Color3(255, 0, 0);
+                redMat.emissiveColor = new BABYLON.Color3(255, 0, 0);
+                redMat.specularColor = new BABYLON.Color3(255, 0, 0);
+        
+                this.light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
+                this.light.intensity = 1.5;
+                
+                // Création de la photo 
+                
+                this.createPhoto(nameScene[0],mediaScene[0].source.url ,0);
+               var mat = new BABYLON.StandardMaterial(scene);
+                mat.diffuseTexture = new BABYLON.Texture("https://upload.wikimedia.org/wikipedia/commons/3/33/Info_icon_002.svg", scene);
+               
+                mat.diffuseTexture.hasAlpha = true;
+                mat.backFaceCulling = false;
+         
+                var plan = BABYLON.Mesh.CreatePlane("plan",2,scene)
+                
+        	    plan.material = mat;
+              
+               plan.position.x = 0;
+               plan.position.y = 2;
+               
+                return this;
+            }
+        
+            createPhoto(name,url,id)
+            {    // Création de la photo 
+                this.photo = new Photo(name,url,scene,id);
+            }
+        
+            createCamera(id)
+            {
+                // Construit la caméra associée à la scene
+                this.camera = new BABYLON.ArcRotateCamera("Camera", -Math.PI / 2,  Math.PI / 2, 5, BABYLON.Vector3.Zero(), scene);
+                this.camera.attachControl(canvas, true);
+                this.camera.inputs.attached.mousewheel.detachControl(canvas);
+                this.camera.fov = cameraJSON[id].fov.default;
+                
+            }
+        
+            createCameraVR()
+            {
+                //Construit la VR associé à la scène
+                var vrHelper = scene.createDefaultVRExperience();
+                vrHelper.displayGaze = true ;
+                vrHelper.displayLaserPointer = true;
+                vrHelper.changeGazeColor(new BABYLON.Color3(1,1,1));
+                vrHelper.enableInteractions();
+                
+            }
+        /*
+            destructionPhoto()
+            {
+                this.photo.destruction();
+                delete this.photo;
+            }
+           */
+        }
+        
+        class Photo{
+            constructor(name,url,scene,id)
+            {
+                this.dome = new BABYLON.PhotoDome(
+                    name,
+                    url,
+                {
+                    resolution: 32,
+                    size: 1000
+                },
+                scene
+                );
+           
+            
+            // Hotspots : rectangles & spheres
+         
+            this.hotspot = new Hotspots(id);
+            
+            this.advancedTexture = BABYLON.GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
+           /* 
+            this.sphere.addSphere("sphere1",scene,redMat,1,0,0);
+            
+            this.sphere.addSphere("sphere2",scene,redMat,-1,0,0);
+            this.Etiquette = new Etiquette();
+            this.Etiquette.addEtiquette(this.sphere.Sphere[0],this.advancedTexture,"Entrée");
+            this.Etiquette.addEtiquette(this.sphere.Sphere[1],this.advancedTexture,"Sortie");
+           
+        */
+            
+            return this;
+         
+            }
+           /* destructionPhoto()
+            {
+                delete this.id;
+                this.sphere.destructionSphere();
+                this.dome.dispose();
+                delete this.dome;
+            }*/
+        }
+        
+        
+        class Hotspots
+        {
+            constructor(id)
+            {
+        
+                // nombre de HotSpots dans la scène
+                this.n = getNb(courses.story.scenes[id].hotspots);
+                // id : n° de la scène
+                this.p = id;
+                this.hotspot = new Array(id);
+                
+                //this.trigger = [];
+                this.createHotpots();
+               
+                return this;
+               
+            }
+          
+            createHotpots()
+            {
+                for(var i = 0; i<2;i++)
+                {
+                   if(geometryHotspot[this.p][i].type == "sphère")
+                   {
+                       this.hotspot[i] = this.addSphere(i);
+                       
+                   }
+                   else if (geometryHotspot[this.p][i].type == "dom")
+                   {
+                      this.hotspot[i] = this.addPlan(i);
+                   }
+                  this.hotspot[i].position = new BABYLON.Vector3(positionHotspot[this.p][i].x,positionHotspot[this.p][i].y,positionHotspot[this.p][i].z);
+                }
+              
+            }
+        
+            addSphere(id)
+            {
+                var mesh = BABYLON.Mesh.CreateSphere(idHotspot[id], 16, geometryHotspot[this.p][id].options.radius, scene);
+                mesh.material = redMat;
+                return mesh;
+            }
+        
+           addPlan(id)
+           {
+               var mat = new BABYLON.StandardMaterial( scene);
+                mat.diffuseTexture = new BABYLON.Texture(domHotspot[this.p][id].url, scene);
+               
+                mat.diffuseTexture.hasAlpha = true;
+                mat.backFaceCulling = false;
+         
+                var plan = BABYLON.MeshBuilder.CreatePlane("plan",{width: geometryHotspot[this.p][id].options.width, height:geometryHotspot[this.p][id].options.height},scene)
+                
+        	    plan.material = mat;
+              
+                var angle = 0.01;
+        
+                scene.registerBeforeRender(() => {
+                
+               plan.rotate(new BABYLON.Vector3(rotationHotspot[this.p][id].x,rotationHotspot[this.p][id].y,rotationHotspot[this.p][id].z), angle, BABYLON.Space.WORLD);
+                
+            })
+            
+            return plan;
+           }
+            
+            
+        }
+        
+        var redMat, greenMat;
+        
+        
+        var createScene = function() {
+        
+            var scene = new Scene();
+        
+        
+               
+        
+        	return scene;
+        };
+        
+        var engine = new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true });
+        var scene = createScene();
+
+        engine.runRenderLoop(function () {
+            if (scene) {
+                scene.render();
+            }
+        });
+
+        // Resize
+        window.addEventListener("resize", function () {
+            engine.resize();
+        });
+    </script>
+</body>
+</html>
